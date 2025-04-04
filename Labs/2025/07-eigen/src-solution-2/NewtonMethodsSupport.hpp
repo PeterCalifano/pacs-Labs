@@ -1,6 +1,8 @@
 #ifndef NEWTONMETHODSSUPPORT_HPP
 #define NEWTONMETHODSSUPPORT_HPP
 
+#include "NewtonTraits.hpp"
+
 /// Newton solver options, with default values.
 ///
 /// @note Absolute tolerances are used in the code.
@@ -26,11 +28,12 @@ public:
 };
 
 /// Output results.
+template <ProblemType Type>
 class NewtonResult
 {
 public:
   /// Solution.
-  NewtonTraits::VariableType solution;
+  typename NewtonTraits<Type>::VariableType solution;
 
   /// Residual norm.
   double norm_res = 0.0;
