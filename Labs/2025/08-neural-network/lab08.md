@@ -1,6 +1,6 @@
 ---
 marp: true
-size: 4:3
+#size: 4:3
 style: |
     img[alt~="center"] {
       display: block;
