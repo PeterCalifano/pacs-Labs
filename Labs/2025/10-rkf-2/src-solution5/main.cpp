@@ -4,6 +4,7 @@
 #include <fstream>
 #include <iostream>
 #include <memory>
+#include <string> //run with ./main RK45 , or ./main any
 
 int
 main(int argc, char **argv)
@@ -23,8 +24,17 @@ main(int argc, char **argv)
     // pointer to the chosen solver, and possibly initialize it
     // depending on a string passed by the user representing the
     // solver name.
-
-    rkf_scheme = std::make_unique<RKFScheme::FehlbergRK12>();
+ 
+    
+    std::string butcher_type (argv[1]);
+    
+    if (butcher_type == "RK45")
+      rkf_scheme = std::make_unique<RKFScheme::RK45>();
+    else if (butcher_type == "RK23")
+      rkf_scheme = std::make_unique<RKFScheme::RK23>();
+    else
+      rkf_scheme = std::make_unique<RKFScheme::FehlbergRK12>();
+    
     RKF<RKFKind::SCALAR> solver{fun, options, std::move (rkf_scheme)};
 
     double y0{1};
@@ -60,7 +70,16 @@ main(int argc, char **argv)
     };
 
     RKFOptions options{0., 40., 0.2, 1e-4, 2000};
-    rkf_scheme = std::make_unique<RKFScheme::DormandPrince>();
+    
+    std::string butcher_type (argv[1]);
+    
+    if (butcher_type == "RK45")
+      rkf_scheme = std::make_unique<RKFScheme::RK45>();
+    else if (butcher_type == "RK23")
+      rkf_scheme = std::make_unique<RKFScheme::RK23>();
+    else
+      rkf_scheme = std::make_unique<RKFScheme::DormandPrince>();
+      
     RKF<RKFKind::VECTOR> solver{fun, options, std::move (rkf_scheme)};
 
     Eigen::VectorXd y0(2);
