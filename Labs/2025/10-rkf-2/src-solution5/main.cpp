@@ -10,7 +10,7 @@ main(int argc, char **argv)
 {
   using namespace std;
 
-  std::shared_ptr<ButcherArray> rkf_scheme;
+  std::unique_ptr<ButcherArray> rkf_scheme;
 
   {
     auto fun = [](double const &t, double const &y) {
@@ -19,13 +19,13 @@ main(int argc, char **argv)
     auto exact = [](double const &t) { return std::exp(-10. * t); };
 
     RKFOptions options{0., 100., 1e-5, 1e-4, int(1e6)};
-    // As a possible extension, RKFOptions could store the shared
+    // As a possible extension, RKFOptions could store the unique
     // pointer to the chosen solver, and possibly initialize it
     // depending on a string passed by the user representing the
     // solver name.
 
-    rkf_scheme = std::make_shared<RKFScheme::FehlbergRK12>();
-    RKF<RKFKind::SCALAR> solver{fun, options, rkf_scheme};
+    rkf_scheme = std::make_unique<RKFScheme::FehlbergRK12>();
+    RKF<RKFKind::SCALAR> solver{fun, options, std::move (rkf_scheme)};
 
     double y0{1};
 
@@ -60,8 +60,8 @@ main(int argc, char **argv)
     };
 
     RKFOptions options{0., 40., 0.2, 1e-4, 2000};
-    rkf_scheme = std::make_shared<RKFScheme::DormandPrince>();
-    RKF<RKFKind::VECTOR> solver{fun, options, rkf_scheme};
+    rkf_scheme = std::make_unique<RKFScheme::DormandPrince>();
+    RKF<RKFKind::VECTOR> solver{fun, options, std::move (rkf_scheme)};
 
     Eigen::VectorXd y0(2);
     y0[0] = 1.;

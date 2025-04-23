@@ -63,9 +63,9 @@ public:
   //! Constructor passing butcher table and forcing function
   RKF(Function const &                     f,
       RKFOptions const &                   options,
-      std::shared_ptr<ButcherArray> const &bt)
+      std::unique_ptr<ButcherArray> &&bt)
     : M_f(f)
-    , ButcherTable(bt)
+    , ButcherTable(std::move (bt))
     , opt(options){};
 
   //! Default constructor
@@ -80,9 +80,9 @@ public:
 
   //! Set the Butcher Array
   void
-  set_ButcherArray(std::shared_ptr<ButcherArray> const &bt)
+  set_ButcherArray(std::unique_ptr<ButcherArray> &&bt)
   {
-    ButcherTable = bt;
+    ButcherTable = std::move (bt);
   }
 
   //! Set solver options
@@ -100,7 +100,7 @@ public:
 
 private:
   Function                      M_f;
-  std::shared_ptr<ButcherArray> ButcherTable;
+  std::unique_ptr<ButcherArray> ButcherTable;
   RKFOptions                    opt;
 
   /*! Function for a single step. It is private since is used only
