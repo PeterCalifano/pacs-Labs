@@ -8,7 +8,7 @@ style: |
     }
 ---
 
-# **Laboratory 14**
+# **Laboratory 15**
 ## Package managers & containerization in HPC  
 
 ### Paolo Joseph Baioni
@@ -118,7 +118,7 @@ spack config get compilers
 Check installed packages with `spack find`
 Now you can use that compiler to build new packages, eg
 ```
-spack install intel-tbb%gcc14.2.0
+spack install intel-oneapi-tbb%gcc@14.2.0
 ```
 Check again installed packages with `spack find`
 
@@ -216,7 +216,7 @@ High-Performace Computing Container Maker provides a python based higher level i
 It can be installed in the **recommended** way to install python packages 
 ```
 python3 -m venv hpccm
-source /work/hpccm/bin/activate
+source hpccm/bin/activate
 pip install --upgrade pip
 pip install hpccm
 ```
