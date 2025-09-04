@@ -1,11 +1,11 @@
 
 ## EXMPLE OMP FLAGS :
-## CPPFLAGS = "-I./quadgrid/include -I./json/single_include/nlohmann/ -I./json/single_include-O3 -I/opt/local/include/ "
+## CPPFLAGS = "-I./quadgrid/include -I./json/single_include/nlohmann/ -I./json/single_include -I/opt/local/include/ "
 ## CXXFLAGS = "-O3 -fopenmp"
 ## LDFLAGS = " -L/opt/local/lib/libomp "
 
 ## EXMPLE PSTL via oneDPC++ FLAGS :
-## CPPFLAGS = "-DONEDPL_USE_TBB_BACKEND -I/opt/local/libexec/onetbb/include -I/opt/local/include/ prova_omp.cpp "
+## CPPFLAGS = "-DONEDPL_USE_TBB_BACKEND -I/opt/local/libexec/onetbb/include -I/opt/local/include/  "
 ## CXXFLAGS = "-O3 "
 ## LDFLAGS = "-L/opt/local/libexec/onetbb/lib/"
 ## LIBS = "-ltbb"
@@ -14,11 +14,12 @@ CXX ?= /opt/local/bin/clang++
 CPPFLAGS ?= -I./quadgrid/include -I./json/single_include/nlohmann/ -I./json/single_include
 CXXFLAGS ?= -std=c++17
 QUADGRIDSRC ?= ./quadgrid/src/particles.cpp
+TIMERSRC ?= ./cdf_timer/src/timer.cpp
 LDFLAGS ?=  -L/opt/local/lib
 LIBS ?= 
 
 grid_velocity_field : grid_velocity_field.cpp
-	$(CXX) $(CXXFLAGS) $(CPPFLAGS) $(QUADGRIDSRC) grid_velocity_field.cpp -o grid_velocity_field $(LDFLAGS) $(LIBS)
+	$(CXX) $(CXXFLAGS) $(CPPFLAGS) $(QUADGRIDSRC) $(TIMERSRC) grid_velocity_field.cpp -o grid_velocity_field $(LDFLAGS) $(LIBS)
 
 
 loaddeps :
