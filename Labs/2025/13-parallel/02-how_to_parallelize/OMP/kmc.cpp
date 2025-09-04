@@ -26,12 +26,12 @@ constexpr REAL   T   = 1.0;                      // [s] simulation time
 constexpr REAL   g   = 0.0;                      // [m s^-2] gravity
 constexpr REAL   m   = 2.0;                      // [kg] particle mass
 
-void fluid_velocity (double x, double y, double& vx, double& vy){ 
+void fluid_velocity (REAL x, REAL y, REAL& vx, REAL& vy){ 
   vx = 2. * M_PI * (1.-y);
   vy = 2. * M_PI * (x-1.);
 }
 
-void particle_force (double x, double y, double& fx, double& fy){
+void particle_force (REAL x, REAL y, REAL& fx, REAL& fy){
   fx = 0;
   fy = -m*g;
 }
@@ -54,8 +54,8 @@ public :
     : x(x_), y(y_) { };
   
   void operator() (int n) {
-    double vx, vy;
-    double fx, fy;
+    REAL vx, vy;
+    REAL fx, fy;
     
     // Compute fluid velocity and forces  
     fluid_velocity (x[n], y[n], vx, vy);
@@ -95,8 +95,8 @@ public :
 
 int main() {
 
-  std::vector<double> x (Np);
-  std::vector<double> y (Np);
+  std::vector<REAL> x (Np);
+  std::vector<REAL> y (Np);
   // OR :
   // REAL *x = new REAL[Np];
   // REAL *y = new REAL[Np];
