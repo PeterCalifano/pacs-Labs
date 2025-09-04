@@ -93,7 +93,7 @@ int main() {
   double        r   = 1e-2;                     // [m] particle radius
   double        mob = 1. / 6. / M_PI / mu / r;  // [s kg^-1] mobility
   double        D   = 1;                 // [m^2 s^-1] diffusivity
-  int           Np = 100000;                     // [-] number of particles
+  int           Np = 10000;                     // [-] number of particles
   double        dt = 1e-6;                      // [s] time step
   double        T  = 0.02;                     // [s] simulation time
   double        g  = 0;                         // [m s^-2] gravity
@@ -131,7 +131,7 @@ int main() {
   for (int it = 0; it<Nt; ++it){    
     
     // Loop over all particles
-    for (n=0; n<Np; ++Np)
+    for (int n=0; n<Np; ++n)
       state(n);
       
     printframe = false;
@@ -151,3 +151,4 @@ int main() {
   std::cout << "Simulation complete. Data saved to particle_positions.csv.\n"; 
   return 0;
 }
+
