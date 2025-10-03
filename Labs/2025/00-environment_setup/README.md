@@ -23,13 +23,13 @@ In following commands, podman can be exchanged with docker. Under Linux, in case
 
 ### Create a directory for shared files
 
-```
+```bash
 mkdir -p /path/to/shared_files_directory
 ```
 
 ### Pull the image
 
-```
+```bash
 podman pull --arch=amd64 docker://lucaformaggia/pacs-examples:latest
 ```
 
@@ -37,13 +37,13 @@ podman pull --arch=amd64 docker://lucaformaggia/pacs-examples:latest
 
 ### Run the container
 
-```
+```bash
 podman run -it --name pacs2025 --rm -v /path/to/shared_files_directory:/home/pacs/shared_files docker.io/lucaformaggia/pacs-examples:latest
 ```
 
 ### Permanent changes example - installing nano
 
-```
+```bash
 podman run -it --name pacs2025 docker.io/lucaformaggia/pacs-examples:latest
 sudo apt update && sudo apt install nano
 logout
@@ -55,19 +55,19 @@ podman run -it --name pacs2025 --rm -v /path/to/shared_files_directory:/home/pac
 
 ### List images
 
-```
+```bash
 podman images
 ```
 
 ### List containers
 
-```
+```bash
 podman ps -a -s
 ```
 
 ### Clean everything
 
-```
+```bash
 podman system prune --all
 ```
 
@@ -77,7 +77,7 @@ podman system prune --all
 
 [mk modules](https://github.com/pjbaioni/mk) bundle a set of scientific libraries compiled under the same toolchain. Once installed, they provide the command module, that has several subcommands:
 
-```
+```bash
 module load <module name> 
 ```
 
@@ -97,7 +97,7 @@ loads the requested module. This creates a set of environment variables storing 
 
 This step is useful to build large containers  
 
-```
+```bash
 mkdir -p ~/containers
 cd containers
 mkdir -p ~/containers/temp
@@ -105,19 +105,19 @@ mkdir -p ~/containers/temp
 
 ### pull the container, using the new temp directory
 
-```
+```bash
 export APPTAINER_TMPDIR=~/containers/temp && export APPTAINER_CACHEDIR=~/containers/cache && apptainer pull docker://quay.io/pjbaioni/mk:2024
 ```
 
 ### launch the container
 
-```
+```bash
 apptainer shell mk_2024.sif
 ```
 
 ### activate and load base modules
 
-```
+```bash
 source /u/sw/etc/bash.bashrc
 module load gcc-glibc
 module load eigen
@@ -127,7 +127,7 @@ module load eigen
 
 ### Create a file test.cpp
 
-```
+```cpp
 #include <Eigen/Eigen>
 #include <iostream>
 
@@ -144,7 +144,7 @@ In case of podman/docker, it is better to store it in the shared folder.
 
 Test the installation with
 
-```
+```bash
 podman run -it --name pacs2025 --rm -v /path/to/shared_files_directory:/home/pacs/shared_files docker.io/lucaformaggia/pacs-examples:latest
 g++ -std=c++20 -Wall -I $mkEigenInc shared_files/test.cpp  -o test && ./test && rm ./test
 ```
@@ -153,7 +153,7 @@ g++ -std=c++20 -Wall -I $mkEigenInc shared_files/test.cpp  -o test && ./test && 
 
 Test the installation with
 
-```
+```bash
 apptainer shell /path/to/mk_2024.sif
 source /u/sw/etc/bash.bashrc
 module load gcc-glibc
@@ -163,7 +163,7 @@ g++ -std=c++20 -Wall -I $mkEigenInc test.cpp  -o test && ./test && rm ./test
 
 ### mk modules only (linux)
 
-```
+```bash
 wget https://github.com/pcafrica/mk/releases/download/v2024.0/mk-2024.0-full.tar.gz
 sudo tar xvzf mk-2024.0-full.tar.gz -C /
 rm mk-2024.0-full.tar.gz
@@ -177,14 +177,14 @@ g++ -std=c++20 -Wall -I $mkEigenInc test.cpp  -o test && ./test && rm ./test
 
 It is either possible to start from the docker://lucaformaggia/pacs-examples:latest container, follow the Permanent changes example - installing nano and adapt it to the mk modules only (linux) example, or directly:
 
-```
+```bash
 podman pull --arch=amd64 quay.io/pjbaioni/pacs-examples-with-mk:2024
 podman run -it --name pacs2025 --rm -v /path/to/shared_files_directory:/home/pacs/shared_files quay.io/pjbaioni/pacs-examples-with-mk:2024
 ```
 
 Then, it will be possible both to use the pacs-examples environment (default), or to load the mk modules, starting from
 
-```
+```bash
 source /u/sw/etc/bash.bashrc
 ```
 
@@ -193,7 +193,7 @@ source /u/sw/etc/bash.bashrc
 If you use the podman (or docker) container, the pacs-Labs and pacs-examples repositories are already set up and ready to use.
 Otherwise, either you are using the mk modules natively or via apptainer, you should clone them and install the needed libraries, following the repos READMEs. In short:
 
-```
+```bash
 git clone git@github.com:pacs-course/pacs-Labs
 git clone --recursive git@github.com:HPC-Courses/pacs-examples.git --branch master
 cd pacs-examples
